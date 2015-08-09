@@ -57,6 +57,7 @@
 						</header>
 						<form action="processinsCategory.jsp" method="post">
 							<b>Category:</b><input type="text" name="catname"/><br/>
+							<b>Image Path:</b><input type="text" name="imgpath"/><br/>
 							<input type="submit" name="btnInsert" value="Insert"/>
 							<input type="reset" name="btnReset" value="Reset"/>
 						</form>

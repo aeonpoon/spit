@@ -62,12 +62,14 @@
 								String connURL = "jdbc:mysql://localhost/spit?user=root&password=abc123";
 								Connection conn = DriverManager.getConnection(connURL);
 								
-								String sql = "insert into category (catname) values(?)";
+								String sql = "insert into category (catname, imgpath) values(?,?)";
 								PreparedStatement pstmt = conn.prepareStatement(sql);
 								
 								String catname = request.getParameter("catname");
+								String imgpath = request.getParameter("imgpath");
 								
 								pstmt.setString(1, catname);
+								pstmt.setString(2, imgpath);
 								
 								int rec = pstmt.executeUpdate();
 								
