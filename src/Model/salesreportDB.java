@@ -1,6 +1,7 @@
 package Model;
 
 import java.sql.*;
+import java.io.*;
 import java.util.*;
 
 public class salesreportDB {
@@ -27,7 +28,7 @@ public class salesreportDB {
 				String prodname = rs.getString("Product");
 				int quantity = rs.getInt("Total Quantity");
 				
-				salesreport rp = new salesreport(prodname, quantity);
+				salesreport rp = new salesreport(prodname, quantity, month, year);
 				al.add(rp);
 			}
 			
@@ -56,7 +57,7 @@ public class salesreportDB {
 				String prodname = rs.getString("prodname");
 				int quantity = rs.getInt("Total Quantity");
 				
-				salesreport rp = new salesreport(prodname, quantity);
+				salesreport rp = new salesreport(prodname, quantity, year);
 				al.add(rp);
 			}
 			
@@ -68,6 +69,23 @@ public class salesreportDB {
 			return null;
 		}
 		
+	}
+	
+	public boolean printReport(ArrayList<salesreport> data){
+		try {
+			String text = "";
+			text += "Product Name\tQuantity Sold";
+            BufferedWriter out = new BufferedWriter(new FileWriter("monthlyreport.txt"));
+            for(salesreport rp:data){
+            	text += rp.getProdname()+"\t"+rp.getQuantity();
+            }
+            out.write(text);
+            out.close();
+            return true;
+        }catch (Exception e){
+            System.out.println("Error: " + e);
+            return false;
+        }
 	}
 	
 }

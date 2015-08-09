@@ -117,12 +117,18 @@
 								out.println("</table>");
 							}
 							
+							if(getmonthreport != null || getyearreport != null){
+								out.println("<form action='printreportController' method='post'>");
+								out.println("<input type='submit' value='Print Report'/>");
+								out.println("</form>");
+							}
+							
 							out.println("<form action='salesreport.jsp' method='get'>");
 							out.println("<br/>");
 							out.println("<input type='submit' value='Back'/>");
-							session.removeAttribute("getmonthreport");
-							session.removeAttribute("getyearreport");
 							out.println("</form>");
+							
+							
 						%>
 						
 					</div>

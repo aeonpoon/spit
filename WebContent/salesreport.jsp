@@ -62,6 +62,10 @@
 							}else{
 								Login loginid = (Login)session.getAttribute("admDetails");
 								String msg = request.getParameter("msg");
+								
+								session.removeAttribute("getmonthreport");
+								session.removeAttribute("getyearreport");
+								
 								if(msg != null){
 									out.println(msg);
 								}
