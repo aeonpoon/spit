@@ -1,4 +1,4 @@
-<%@ page import="java.sql.*, Model.*" %>
+<%@ page import="java.sql.*, Model.*, java.util.*" %>
 <!DOCTYPE HTML>
 <!--
 	Dopetrope by HTML5 UP
@@ -36,11 +36,11 @@
 					<!-- Nav -->
 						<nav id="nav">
 							<ul>
-								<li class="current"><a href="adminpage.jsp">Admin Page</a></li>
+								<li><a href="adminpage.jsp">Admin Page</a></li>
 								<li><a href="insertproduct.jsp">Insert Product</a></li>
 								<li><a href="insertcategory.jsp">Insert Category</a></li>
 								<li><a href="viewcategory.jsp">View Category</a></li>
-								<li><a href="salesreport.jsp">Sales Report</a></li>
+								<li class="current"><a href="salesreport.jsp">Sales Report</a></li>
 								<li><a href="searchproduct.jsp">Search Product</a></li>
 								<li><a href="viewcomments.jsp">View Comments</a></li>
 								<li><a href="logoutController">Logout</a></li>
@@ -55,64 +55,85 @@
 				<!-- Content -->
 					<div align="center">
 						<%
-							String status = (String)session.getAttribute("status");
-			
+						String status = (String)session.getAttribute("status");
+						
 							if(status != "verifyAdmin"){
 								response.sendRedirect("login.jsp?msg=Please Login!");
 							}else{
 								Login loginid = (Login)session.getAttribute("admDetails");
-							%>
-						<header>
-						Welcome <%out.println(loginid.getLoginid()); %>
-						<h2>Admin Page</h2>
-						</header>
-						<b>Navigate through the admin page to insert product/category or to view them</b>
-						<br/><br/>
-						<%
-							try{
-								Class.forName("com.mysql.jdbc.Driver");
-								String connURL = "jdbc:mysql://localhost/spit?user=root&password=abc123";
-								Connection conn = DriverManager.getConnection(connURL);
-								
-								String sql = "select * from category C, product P where C.catid = P.catid";
-								PreparedStatement pstmt = conn.prepareStatement(sql);
-								int count = 0;
-								ResultSet rs = pstmt.executeQuery();
-								
-								out.println("<table border='1'>");
-								out.println("<tr>");
-								out.println("<td align='center' width='50'><b>Category Name</b></td>");
-								out.println("<td align='center' width='10'><b>Product Name</b></td>");
-								out.println("<td align='center' width='50'><b>Quantity</b></td>");
-								out.println("</tr>");
-								
-								while(rs.next()){
-									String catname = rs.getString("catname");
-									String prodname = rs.getString("prodname");
-									int quantity = rs.getInt("quantity");
-									
-									if(quantity < 15){
-										out.println("<tr>");
-										out.println("<td align='center'>" + catname + "</td>");
-										out.println("<td align='center'>" + prodname + "</td>");
-										out.println("<td align='center'><font color='red'>" + quantity + "</font></td>");
-										out.println("</tr>");
-										count ++;
-									}
+								String msg = request.getParameter("msg");
+								if(msg != null){
+									out.println(msg);
 								}
-								if(count == 0){
-									out.println("Currently product not low in stock");
-								}
-								out.println("</table><br/>");
-								conn.close();
-								
-							}catch(Exception e){
-								out.println("Error!");
-								System.out.println("Error: " + e);
-							}
 						%>
+						<header>
+						<h2>Sales Report</h2>
+						</header>
+						
+						<form action="salesreportController" method="get">
+							<table>
+									<tr>
+										<td width="50">
+											
+										</td>
+										
+										<td width="150">
+											<input type="radio" name="reptype" value="mtmonth" checked />Monthly Report
+										</td>
+										
+										<td width="200">
+											<select name="mtsmonth">
+												<option selected='selected'>Month</option>
+												<option>1</option>
+												<option>2</option>
+												<option>3</option>
+												<option>4</option>
+												<option>5</option>
+												<option>6</option>
+												<option>7</option>
+												<option>8</option>
+												<option>9</option>
+												<option>10</option>
+												<option>11</option>
+												<option>12</option>
+											</select>
+										</td>
+										
+										<td width="200">
+											<select name="mtyear">
+												<option>Year</option>
+												<option>2014</option>
+												<option selected>2015</option>
+											</select>
+										</td>
+									</tr>
+							</table>
+							
+							<table>		
+									<tr>
+										<td width="50">
+											
+										</td>
+									
+										<td width="150">
+											<input type="radio" name="reptype" value="ytyear" />Yearly Report
+										</td>
+										
+										<td width="400">
+											<select name="ytyear">
+												<option>Year</option>
+												<option>2014</option>
+												<option>2015</option>
+											</select>
+										</td>
+									</tr>
+									
+							</table>
+								<br/><input type="submit" name="btnView" value="View Report" />
+						</form>
+
 					</div>
-							<%
+						<%
 							}
 						%>
 				</div>

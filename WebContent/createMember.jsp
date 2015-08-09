@@ -302,7 +302,7 @@ pageEncoding="ISO-8859-1"%>
 									
 									</td>
 									<td>
-										<input type="submit" id="create" name="btnCreate" value="Create" />
+										<input type="submit" name="btnCreate" value="Create" />
 										<input type="reset" name="btnReset" value="Reset" />
 									</td>
 								</tr>							

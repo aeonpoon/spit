@@ -1,4 +1,4 @@
-<%@ page import="java.sql.*, Model.*" %>
+<%@ page import="java.sql.*, Model.*, java.util.*" %>
 <!DOCTYPE HTML>
 <!--
 	Dopetrope by HTML5 UP
@@ -36,16 +36,16 @@
 					<!-- Nav -->
 						<nav id="nav">
 							<ul>
-								<li class="current"><a href="adminpage.jsp">Admin Page</a></li>
+								<li><a href="adminpage.jsp">Admin Page</a></li>
 								<li><a href="insertproduct.jsp">Insert Product</a></li>
 								<li><a href="insertcategory.jsp">Insert Category</a></li>
 								<li><a href="viewcategory.jsp">View Category</a></li>
-								<li><a href="salesreport.jsp">Sales Report</a></li>
+								<li class="current"><a href="salesreport.jsp">Sales Report</a></li>
 								<li><a href="searchproduct.jsp">Search Product</a></li>
 								<li><a href="viewcomments.jsp">View Comments</a></li>
 								<li><a href="logoutController">Logout</a></li>
 							</ul>
-						</nav>					
+						</nav>						
 				</div>
 			</div>
 		
@@ -55,64 +55,78 @@
 				<!-- Content -->
 					<div align="center">
 						<%
-							String status = (String)session.getAttribute("status");
-			
+						String status = (String)session.getAttribute("status");
+						
 							if(status != "verifyAdmin"){
 								response.sendRedirect("login.jsp?msg=Please Login!");
 							}else{
 								Login loginid = (Login)session.getAttribute("admDetails");
-							%>
+								ArrayList<salesreport> getmonthreport = (ArrayList<salesreport>)session.getAttribute("getmonthreport");
+								ArrayList<salesreport> getyearreport = (ArrayList<salesreport>)session.getAttribute("getyearreport");
+								String msg = request.getParameter("msg");
+						%>
 						<header>
-						Welcome <%out.println(loginid.getLoginid()); %>
-						<h2>Admin Page</h2>
-						</header>
-						<b>Navigate through the admin page to insert product/category or to view them</b>
-						<br/><br/>
 						<%
-							try{
-								Class.forName("com.mysql.jdbc.Driver");
-								String connURL = "jdbc:mysql://localhost/spit?user=root&password=abc123";
-								Connection conn = DriverManager.getConnection(connURL);
-								
-								String sql = "select * from category C, product P where C.catid = P.catid";
-								PreparedStatement pstmt = conn.prepareStatement(sql);
-								int count = 0;
-								ResultSet rs = pstmt.executeQuery();
-								
-								out.println("<table border='1'>");
-								out.println("<tr>");
-								out.println("<td align='center' width='50'><b>Category Name</b></td>");
-								out.println("<td align='center' width='10'><b>Product Name</b></td>");
-								out.println("<td align='center' width='50'><b>Quantity</b></td>");
-								out.println("</tr>");
-								
-								while(rs.next()){
-									String catname = rs.getString("catname");
-									String prodname = rs.getString("prodname");
-									int quantity = rs.getInt("quantity");
-									
-									if(quantity < 15){
-										out.println("<tr>");
-										out.println("<td align='center'>" + catname + "</td>");
-										out.println("<td align='center'>" + prodname + "</td>");
-										out.println("<td align='center'><font color='red'>" + quantity + "</font></td>");
-										out.println("</tr>");
-										count ++;
-									}
-								}
-								if(count == 0){
-									out.println("Currently product not low in stock");
-								}
-								out.println("</table><br/>");
-								conn.close();
-								
-							}catch(Exception e){
-								out.println("Error!");
-								System.out.println("Error: " + e);
+							if(getmonthreport != null){
+								out.println("<h2>Monthly Report</h2>");
+							}else if(getyearreport != null){
+								out.println("<h2>Yearly Report</h2>");
+							}else{
+								out.println("<h2>Sales Report</h2>");
 							}
 						%>
+						
+						</header>
+						<%
+							if(msg != null){
+								out.println(msg);
+							}
+						
+							out.println("<br/><br/>");
+						
+							if(getmonthreport != null){
+								out.println("<table>");
+								out.println("<tr>");
+								out.println("<td width='100'></td>");
+								out.println("<td width='100'><b>Product Name</b></td>");
+								out.println("<td width='150'><b>Quantity Sold</b></td>");
+								out.println("</tr>");
+								for(salesreport rp:getmonthreport){
+									out.println("<tr>");
+									out.println("<td></td>");
+										out.println("<td>"+rp.getProdname()+"</td>");
+										out.println("<td>"+rp.getQuantity()+"</td>");
+									out.println("</tr>");
+									
+								}
+								out.println("</table>");
+							}else if(getyearreport != null){
+								out.println("<table>");
+								out.println("<td width='100'></td>");
+								out.println("<td width='100'><b>Product Name</b></td>");
+								out.println("<td width='150'><b>Quantity Sold</b></td>");
+								out.println("</tr>");
+								for(salesreport rp:getyearreport){
+									out.println("<tr>");
+										out.println("<td></td>");
+										out.println("<td>"+rp.getProdname()+"</td>");
+										out.println("<td>"+rp.getQuantity()+"</td>");
+									out.println("</tr>");
+									
+								}
+								out.println("</table>");
+							}
+							
+							out.println("<form action='salesreport.jsp' method='get'>");
+							out.println("<br/>");
+							out.println("<input type='submit' value='Back'/>");
+							session.removeAttribute("getmonthreport");
+							session.removeAttribute("getyearreport");
+							out.println("</form>");
+						%>
+						
 					</div>
-							<%
+						<%
 							}
 						%>
 				</div>
