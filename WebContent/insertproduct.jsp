@@ -172,6 +172,15 @@
 								
 								<tr>
 									<td>
+										<b>Quantity:</b>
+									</td>
+									<td>
+										<input type="text" name="quantity" placeholder="Enter Quantity..."/><br/>
+									</td>
+								</tr>
+								
+								<tr>
+									<td>
 										
 									</td>
 									

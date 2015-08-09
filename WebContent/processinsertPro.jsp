@@ -63,7 +63,7 @@
 								Connection conn = DriverManager.getConnection(connURL);
 								
 								String sql = "insert into product (catid, brand, prodname, description, spec1, spec2, "+
-																"spec3, spec4, price, imgpath) values(?,?,?,?,?,?,?,?,?,?)";
+																"spec3, spec4, price, imgpath, quantity) values(?,?,?,?,?,?,?,?,?,?,?)";
 								PreparedStatement pstmt = conn.prepareStatement(sql);
 								
 								String catid = request.getParameter("catid");
@@ -78,6 +78,7 @@
 								
 								String price = request.getParameter("price");
 								String imgpath = request.getParameter("imgpath");
+								int quantity = Integer.parseInt(request.getParameter("quantity"));
 								
 								pstmt.setInt(1, Integer.parseInt(catid));
 								pstmt.setString(2, brand);
@@ -90,6 +91,7 @@
 								
 								pstmt.setInt(9, Integer.parseInt(price));
 								pstmt.setString(10, imgpath);
+								pstmt.setInt(11, quantity);
 								
 								int rec = pstmt.executeUpdate();
 								
