@@ -1,0 +1,26 @@
+login.jsp (done)
+
+userVerify.jsp (done)
+
+adminpage.jsp (done)
+
+	Insert Product (in progress)
+	-insertproduct.jsp (created)
+	-processinsertPro.jsp (created)
+
+	Insert Category (done)
+	-insertcateogry.jsp
+	-processCateogry.jsp
+
+	View/Delete/update Category (done)
+	-viewcateogry.jsp
+	-deleteCategory.jsp
+	-updateCategory.jsp
+		-processupdateCat.jsp
+
+	Delete/Update Product (in progress)
+	-delupproduct.jsp (created)
+	-deleteProduct.jsp
+	-updateProduct.jsp
+
+	Search Products
