@@ -56,7 +56,8 @@ public class voucherGenDB {
 				voucherGen getcode = new voucherGen(code);
 				success = getcode;
 			}else{
-				success = null;
+				voucherGen getcode = new voucherGen("-");
+				success = getcode;
 			}
 			conn.close();
 			return success;

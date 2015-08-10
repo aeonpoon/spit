@@ -58,6 +58,10 @@ public class LoginController extends HttpServlet {
 				if(password.equals(depass)){
 					registerMember memdetails = db.loginMember(loginid, depass);
 					voucherGen code = voucherdb.getvCode(memdetails.getMemid());
+					
+					if(code == null){
+						code.setStringChars("-");
+					}
 				
 					if(memdetails != null){
 						status = "verifyMem";

@@ -37,38 +37,45 @@ public class salesreportController extends HttpServlet {
 		
 		salesreportDB db = new salesreportDB();
 		
-		if(reptype.equals("mtmonth")){
-			String month = request.getParameter("mtsmonth");
-			String year = request.getParameter("mtyear");
-			
-			if(month.equals("Month") || year.equals("Year")){
-				response.sendRedirect("salesreport.jsp?msg=Please select month/year for monthly report!");
-			}else{
-				ArrayList<salesreport> getmonthreport = db.getMonthlyreport(Integer.parseInt(month), Integer.parseInt(year));
-				
-				if(getmonthreport.size() != 0){
-					session.setAttribute("getmonthreport", getmonthreport);
-					response.sendRedirect("viewsalesreport.jsp?msg=Select successful!");
-				}else{
-					response.sendRedirect("viewsalesreport.jsp?msg=No sales on this month!");
-				}
-			}
+		String status = (String)session.getAttribute("status");
+		
+		if(status != "verifyAdmin"){
+			response.sendRedirect("login.jsp?msg=Please Login!");
 		}else{
-			String year = request.getParameter("ytyear");
 			
-			if(year.equals("Year")){
-				response.sendRedirect("salesreport.jsp?msg=Please select year for yearly report!");
-			}else{
-				ArrayList<salesreport> getyearreport = db.getYearlyreport(Integer.parseInt(year));
+			if(reptype.equals("mtmonth")){
+				String month = request.getParameter("mtsmonth");
+				String year = request.getParameter("mtyear");
 				
-				if(getyearreport.size() != 0){
-					
-					session.setAttribute("getyearreport", getyearreport);
-					response.sendRedirect("viewsalesreport.jsp?msg=Select successful!");
+				if(month.equals("Month") || year.equals("Year")){
+					response.sendRedirect("salesreport.jsp?msg=Please select month/year for monthly report!");
 				}else{
-					response.sendRedirect("viewsalesreport.jsp?msg=No sales on this year!");
+					ArrayList<salesreport> getmonthreport = db.getMonthlyreport(Integer.parseInt(month), Integer.parseInt(year));
+					
+					if(getmonthreport.size() != 0){
+						session.setAttribute("getmonthreport", getmonthreport);
+						response.sendRedirect("viewsalesreport.jsp?msg=Select successful!");
+					}else{
+						response.sendRedirect("viewsalesreport.jsp?msg=No sales on this month!");
+					}
 				}
+			}else{
+				String year = request.getParameter("ytyear");
 				
+				if(year.equals("Year")){
+					response.sendRedirect("salesreport.jsp?msg=Please select year for yearly report!");
+				}else{
+					ArrayList<salesreport> getyearreport = db.getYearlyreport(Integer.parseInt(year));
+					
+					if(getyearreport.size() != 0){
+						
+						session.setAttribute("getyearreport", getyearreport);
+						response.sendRedirect("viewsalesreport.jsp?msg=Select successful!");
+					}else{
+						response.sendRedirect("viewsalesreport.jsp?msg=No sales on this year!");
+					}
+					
+				}
 			}
 		}
 	}

@@ -14,6 +14,7 @@ import security.mixSmash;
 import java.util.regex.*;
 
 import Model.*;
+import mail.*;
 
 /**
  * Servlet implementation class CreateMember
@@ -46,7 +47,7 @@ public class RegisterController extends HttpServlet {
 			HttpSession session = request.getSession();
 			
 			String password = request.getParameter("password");
-			String chkpassword = "^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$, g";
+			String chkpassword = "^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$";
 			Pattern passwordPattern = Pattern.compile(chkpassword);
 			Matcher passwordMatcher = passwordPattern.matcher(password);
 			
@@ -125,9 +126,9 @@ public class RegisterController extends HttpServlet {
 				session.setAttribute("details", reg);
 				response.sendRedirect("createMember.jsp?msg="+msg);
 			}else{
-
 				registerMemberDB db = new registerMemberDB();
 				mixSmash ms = new mixSmash();
+				SendMail mail = new SendMail();
 				
 				boolean chkemail = db.checkemail(email);
 				
@@ -141,6 +142,7 @@ public class RegisterController extends HttpServlet {
 						
 						if(enpassSuccess != false && enpassStringSuccess != false){
 							session.removeAttribute("details");
+							boolean welcomemsg = mail.welcomeMessage(email, name);
 							response.sendRedirect("login.jsp?success="+success+"&msg=Please proceed to login!");
 						}
 					}else{

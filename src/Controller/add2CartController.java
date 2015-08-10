@@ -54,9 +54,18 @@ public class add2CartController extends HttpServlet {
 				boolean insertcart = db.insertcart(memDetails.getMemid());
 				
 				if(insertcart != false){
-					boolean insertcarthasproduct = db.insertcarthasproduct(getcartid, prodid, catid, quantity);
-					if(insertcarthasproduct != false){
-						response.sendRedirect("displayCartController");
+					int getcartidafterins = db.getcartid(memDetails.getMemid());
+					
+					if(getcartidafterins != 0){
+						boolean insertcarthasproduct = db.insertcarthasproduct(getcartidafterins, prodid, catid, quantity);
+						
+						if(insertcarthasproduct != false){
+							response.sendRedirect("displayCartController");
+						}else{
+							response.sendRedirect("displayCart.jsp?msg=Insert Fail!");
+						}
+					}else{
+						response.sendRedirect("displayCart.jsp?msg=Insert Fail!");
 					}
 				}else{
 					response.sendRedirect("displayCart.jsp?msg=Insert Fail!");
@@ -64,6 +73,7 @@ public class add2CartController extends HttpServlet {
 				
 			}else{
 				boolean insertcarthasproduct = db.insertcarthasproduct(getcartid, prodid, catid, quantity);
+				
 				if(insertcarthasproduct != false){
 					response.sendRedirect("displayCartController");
 				}else{

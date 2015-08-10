@@ -173,10 +173,9 @@
 									subtotal = 0;
 									total = 0;
 									discount = 0;
-									//System.out.println("getID: "+tid.getTransactionID());
+									
 									for(confirmPurchase d:displayPurchaseDetails){
 										if(tid.getTransactionID() == d.getTransactionID()){
-											//System.out.println("dgetID: "+d.getTransactionID());
 											out.println("<table>");
 											out.println("<tr>");
 											out.println("<td align='center' width='150'> <b>Transaction ID:</b> </td>");
@@ -205,6 +204,22 @@
 									
 									out.println("<table>");
 									out.println("<tr>");
+									out.println("<td align='center' width='150'> <b>Name:</b> </td>");
+									out.println("<td align='center' width='150'> <b>Address:</b> </td>");
+									out.println("<td align='center' width='150'> <b>Email:</b> </td>");
+									out.println("<td align='center' width='150'> <b>Contact No.:</b> </td>");
+									out.println("</tr>");
+									
+									out.println("<tr>");
+									out.println("<td align='center'>"+memDetails.getName()+"</td>");
+									out.println("<td align='center'>"+memDetails.getAddress()+"</td>");
+									out.println("<td align='center'>"+memDetails.getEmail()+"</td>");
+									out.println("<td align='center'>"+memDetails.getContactno()+"</td>");
+									out.println("</tr>");
+									out.println("</table>");
+									
+									out.println("<table>");
+									out.println("<tr>");
 									out.println("<td align='center' width='400'> <b>Product Name:</b> </td>");
 									out.println("<td align='center' width='100'> <b>Unit Price:</b> </td>");
 									out.println("<td align='center'> <b>Quantity:</b> </td>");
@@ -213,7 +228,6 @@
 									
 									for(confirmPurchase dp:getTransactionProd){
 										if(tid.getTransactionID() == dp.getTransactionID()){
-											//System.out.println("dpgetID: "+dp.getTransactionID());
 											out.println("<tr>");
 											out.println("<td align='center'>" +dp.getBrand()+ " " + dp.getProdname()+"</td>");
 											out.println("<td align='center'> $"+dp.getUnitprice()+"</td>");
@@ -232,7 +246,7 @@
 									
 									out.println("<b>Voucher Code: "+vcode+"</b>");
 									out.println("<br/><b>DISCOUNT: $"+discount+"</b>");
-									out.println("<br/><br/>");
+									out.println("<br/><br/><br/><br/>");
 								}
 								
 								out.println("<br/><br/>");

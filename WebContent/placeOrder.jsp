@@ -20,6 +20,7 @@
 		<script src="js/skel.min.js"></script>
 		<script src="js/skel-layers.min.js"></script>
 		<script src="js/init.js"></script>
+		<script src="checkRegister.js"></script>
 		<noscript>
 			<link rel="stylesheet" href="css/skel.css" />
 			<link rel="stylesheet" href="css/style.css" />
@@ -163,7 +164,7 @@
 					
 						ArrayList<getCart> displayCart = (ArrayList<getCart>)session.getAttribute("displayCart");
 				%>
-					<form action="placeOrderController" method="post" >
+					<form action="placeOrderController" method="post" onsubmit="return chkcreditcard()">
 						
 								<%
 								if(displayCart.size() != 0){
@@ -200,6 +201,8 @@
 								}
 								%>
 								<br/><br/>
+								
+								<div id="msg"></div>
 						<table>
 							<tr>
 								<td>
@@ -212,7 +215,7 @@
 									<b>Credit Card No.:</b>
 								</td>
 								<td>
-									<input type="text" name="ccnum" placeholder="Enter Credit Card No. (e.g. 123456789)"/>
+									<input type="text" id="ccnum" name="ccnum" placeholder="Enter Credit Card No. (e.g. 123456789)"/>
 								</td>
 							</tr>
 							
@@ -221,7 +224,7 @@
 									<b>Credit Card Name:</b>
 								</td>
 								<td>
-									<input type="text" name="ccname" placeholder="Enter Credit Card Name (e.g. Jenifer Wang)"/>
+									<input type="text" id="ccname" name="ccname" placeholder="Enter Credit Card Name (e.g. Jenifer Wang)"/>
 								</td>
 							</tr>
 							
@@ -230,8 +233,8 @@
 									<b>Credit Card Type:</b>
 								</td>
 								<td>
-									<select name="cctype">
-										<option selected>Select Card</option>
+									<select id="cctype" name="cctype">
+										<option selected='selected'>Select Card</option>
 										<%
 											try{
 												Class.forName("com.mysql.jdbc.Driver");
@@ -261,17 +264,17 @@
 									<b>Expiry Date:</b>
 								</td>
 								<td>
-									<input type="text" name="expdateM" placeholder="Expiry Month of Credit Card"/>
-									<input type="text" name="expdateY" placeholder="Expiry Year of Credit Card"/>
+									<input type="text" id="expdateM" name="expdateM" placeholder="Expiry Month of Credit Card"/>
+									<input type="text" id="expdateY" name="expdateY" placeholder="Expiry Year of Credit Card"/>
 								</td>
 							</tr>
 							
 							<tr>
 								<td width="340">
-									<b>CVC No.:</b>
+									<b>CVV No.:</b>
 								</td>
 								<td>
-									<input type="text" name="cvcnum" placeholder="Enter CVC No. (e.g. 545)"/>
+									<input type="text" id="cvcnum" name="cvcnum" placeholder="Enter CVV No. (e.g. 545)"/>
 								</td>
 							</tr>
 							
@@ -287,7 +290,7 @@
 							</tr>	
 						</table>
 					</form>
-				<%
+					<%
 					}
 				%>
 					</div>

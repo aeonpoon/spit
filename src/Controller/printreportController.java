@@ -9,6 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import java.util.*;
+
+import Model.*;
+import mail.*;
+
 /**
  * Servlet implementation class printreportController
  */
@@ -38,9 +43,49 @@ public class printreportController extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		
-
-		session.removeAttribute("getmonthreport");
-		session.removeAttribute("getyearreport");
+		ArrayList<salesreport> getmonthreport = (ArrayList<salesreport>)session.getAttribute("getmonthreport");
+		ArrayList<salesreport> getyearreport = (ArrayList<salesreport>)session.getAttribute("getyearreport");
+		
+		String status = (String)session.getAttribute("status");
+		SendMail mail = new SendMail();
+		
+		if(status != "verifyAdmin"){
+			response.sendRedirect("login.jsp?msg=Please Login!");
+		}else{
+			if(getmonthreport != null){
+				String data="<table><tr><td width='100'></td><td width='100'><b>Product Name</b></td>"
+						+ "<td width='150'><b>Quantity Sold</b></td></tr>";
+								
+				for(salesreport rp:getmonthreport){
+					data += "<tr><td></td>"+rp.getProdname()+"</td><td>"+rp.getQuantity()+"</td></tr>";
+				}
+				
+				data += "</table>";
+				
+				boolean sendReport = mail.sendMonthlyReport(data);
+				if(sendReport != false){
+					response.sendRedirect("salesreport.jsp?msg=Report send successful!");
+				}else{
+					response.sendRedirect("salesreport.jsp?msg=Report fail to send!");
+				}
+			}else if(getyearreport != null){
+				String data="<table><tr><td width='100'></td><td width='100'><b>Product Name</b></td>"
+						+ "<td width='150'><b>Quantity Sold</b></td></tr>";
+								
+				for(salesreport rp:getyearreport){
+					data += "<tr><td></td>"+rp.getProdname()+"</td><td>"+rp.getQuantity()+"</td></tr>";
+				}
+				
+				data += "</table>";
+				
+				boolean sendReport = mail.sendYearlyReport(data);
+				if(sendReport != false){
+					response.sendRedirect("salesreport.jsp?msg=Report send successful!");
+				}else{
+					response.sendRedirect("salesreport.jsp?msg=Report fail to send!");
+				}
+			}
+		}
 	}
 
 }

@@ -104,10 +104,14 @@
 									</td>
 									<td></td>
 								</tr>
-								
-								
 							</table>
 						</form>
+						
+						<%
+							out.println("<form action='login.jsp' method='get'>");
+							out.println("<input type='submit' name='btnBack' value='Back'/>");
+							out.println("</form>");
+						%>
 					</div>
 				</div>
 			</div>

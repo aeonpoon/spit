@@ -206,7 +206,40 @@
 								}
 								%>
 						<table>
-							<tr>									
+							<tr>
+								<td width="340">
+									<b>Name:</b>
+								</td>
+								<td>
+									<%out.println(memDetails.getName()); %>
+								</td>									
+							</tr>
+							
+							<tr>
+								<td width="340">
+									<b>Address:</b>
+								</td>
+								<td>
+									<%out.println(memDetails.getAddress()); %>
+								</td>									
+							</tr>
+							
+							<tr>
+								<td width="340">
+									<b>Email:</b>
+								</td>
+								<td>
+									<%out.println(memDetails.getEmail()); %>
+								</td>									
+							</tr>
+							
+							<tr>
+								<td width="340">
+									<b>Contact No.:</b>
+								</td>
+								<td>
+									<%out.println(memDetails.getContactno()); %>
+								</td>									
 							</tr>
 							
 							<tr>
