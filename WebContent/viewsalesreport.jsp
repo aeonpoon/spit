@@ -119,7 +119,7 @@
 							
 							if(getmonthreport != null || getyearreport != null){
 								out.println("<form action='printreportController' method='post'>");
-								out.println("<input type='submit' value='Print Report'/>");
+								out.println("<input type='submit' value='Send Report'/>");
 								out.println("</form>");
 							}
 							
